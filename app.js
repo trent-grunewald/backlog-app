@@ -2,24 +2,27 @@ const form = document.getElementById('registrar');
 const input = form.querySelector('input');
 const ul = document.getElementById('invitedList');
 
-
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
+function createLI(text) {
   const li = document.createElement('li');
-  const inputText = input.value;
+  li.textContent = text;
   const label = document.createElement('label');
-  const removeButton = document.createElement('button');
-  const checkBox = document.createElement('input');
-
-  li.textContent = inputText;
   label.textContent = 'Confirmed';
-  removeButton.textContent = "Remove";
+  const checkBox = document.createElement('input');
   checkBox.type = 'checkBox';
   label.appendChild(checkBox);
   li.appendChild(label);
+  const removeButton = document.createElement('button');
+  removeButton.textContent = "Remove";
   li.appendChild(removeButton);
-  ul.appendChild(li);
+  return li;
+}
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const inputText = input.value;
   input.value = '';
+  const li = createLI(inputText);
+  ul.appendChild(li);
 })
 
 ul.addEventListener('change', (e) => {
