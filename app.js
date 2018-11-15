@@ -8,13 +8,16 @@ form.addEventListener('submit', (e) => {
   const li = document.createElement('li');
   const inputText = input.value;
   const label = document.createElement('label');
+  const removeButton = document.createElement('button');
   const checkBox = document.createElement('input');
 
   li.textContent = inputText;
   label.textContent = 'Confirmed';
+  removeButton.textContent = "Remove";
   checkBox.type = 'checkBox';
   label.appendChild(checkBox);
   li.appendChild(label);
+  li.appendChild(removeButton);
   ul.appendChild(li);
   input.value = '';
 })
@@ -28,5 +31,13 @@ ul.addEventListener('change', (e) => {
     listItem.className = 'responded';
   } else {
     listItem.className = '';
+  }
+})
+
+ul.addEventListener('click', (e) => {
+  if (e.target.textContent === 'Remove'){
+    const li = e.target.parentNode;
+    const ul = li.parentNode;
+    ul.removeChild(li);
   }
 })
