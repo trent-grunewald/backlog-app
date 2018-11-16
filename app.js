@@ -5,6 +5,8 @@ const ul = document.getElementById('invitedList');
 const div = document.createElement('div');
 const filterLabel = document.createElement('label');
 const filterCheckBox = document.createElement('input');
+const header = document.querySelector('header');
+const p = document.createElement('p');
 
 filterLabel.textContent = "Hide non-responders";
 filterCheckBox.type = 'checkbox';
@@ -60,9 +62,14 @@ function createLI(text) {
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const inputText = input.value;
+  if(inputText === '' || inputText === "Please enter a valid name"){
+    input.value = "Please enter a valid name";
+    header.insertBefore(p, form);
+  } else {
   input.value = '';
   const li = createLI(inputText);
   ul.appendChild(li);
+  }
 })
 
 ul.addEventListener('change', (e) => {
