@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', () => {
 const mainDiv = document.querySelector('.main');
 const form = document.getElementById('registrar');
 const input = form.querySelector('input');
@@ -5,14 +6,27 @@ const ul = document.getElementById('invitedList');
 const div = document.createElement('div');
 const filterLabel = document.createElement('label');
 const filterCheckBox = document.createElement('input');
-const header = document.querySelector('header');
-const p = document.createElement('p');
+const invitees = localStorage.getItem('invitees');
+
+window.onload = function() {
+  if(invitees === null) {
+    invitees = [];
+  } else {
+    console.log(invitees)
+  }
+}
+
+function removeInvitee(me){
+  localStorage.removeItem(me);
+}
 
 filterLabel.textContent = "Hide non-responders";
 filterCheckBox.type = 'checkbox';
 div.appendChild(filterLabel);
 div.appendChild(filterCheckBox);
 mainDiv.insertBefore(div, ul);
+
+
 
 filterCheckBox.addEventListener('change', (e) => {
   const isChecked = e.target.checked;
@@ -35,6 +49,7 @@ filterCheckBox.addEventListener('change', (e) => {
 })
 
 function createLI(text) {
+
   function createElement(elementName, property, value){
     const element = document.createElement(elementName);
     element[property] = value;
@@ -56,10 +71,11 @@ function createLI(text) {
   appendTo('button', 'textContent', 'Edit' );
 
   appendTo('button', 'textContent', 'Remove');
+
   return li;
 }
 
-
+;
 form.addEventListener('submit', (e) => {
         e.preventDefault();
         const inputText = input.value;
@@ -73,31 +89,20 @@ form.addEventListener('submit', (e) => {
                 input.value = "This person has already been invited";
                 return
                 }
-            }
                 if (duplicateName != true) {
                 input.value = '';
                 ul.appendChild(li);
+                localStorage.setItem(['invitees'], JSON.stringify(li.outerHTML));                
                 }
+            }
            } else {
             input.value = "Please enter a valid name";
         }
     });
 
-
-
-
-
-// form.addEventListener('submit', (e) => {
-//   e.preventDefault();
-//   const inputText = input.value;
-//   const li = createLI(inputText);
-//   if(inputText === '' || inputText === "Please enter a valid name"){
-//     input.value = "Please enter a valid name";
-//   } else {
-//   input.value = '';
-//   ul.appendChild(li);
-//   }
-// })
+    if(localStorage.invitees){
+      ul.innerHTML = JSON.parse(localStorage['invitees'])
+  }
 
 ul.addEventListener('change', (e) => {
   const checkbox = event.target;
@@ -122,6 +127,8 @@ ul.addEventListener('click', (e) => {
     const nameActions = {
       Remove:  () => {
         ul.removeChild(li);
+        removeInvitee(li);
+        localStorage.removeItem('invitees', JSON.stringify(li.innerHTML));
       },
       Edit: () => {
         button.textContent = "Save";
@@ -145,3 +152,4 @@ ul.addEventListener('click', (e) => {
 
     }
   });
+});
