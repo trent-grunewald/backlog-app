@@ -59,18 +59,45 @@ function createLI(text) {
   return li;
 }
 
+
 form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const inputText = input.value;
-  if(inputText === '' || inputText === "Please enter a valid name"){
-    input.value = "Please enter a valid name";
-    header.insertBefore(p, form);
-  } else {
-  input.value = '';
-  const li = createLI(inputText);
-  ul.appendChild(li);
-  }
-})
+        e.preventDefault();
+        const inputText = input.value;
+        const li = createLI(inputText);
+        let duplicateName = false;
+
+        if (input.value != '' && input.value != 'Please enter a valid name') { 
+            for (i = 0; i < ul.children.length; i ++) {
+                if (input.value == ul.children[i].children[0].textContent) {
+                  duplicateName === true;
+                input.value = "This person has already been invited";
+                return
+                }
+            }
+                if (duplicateName != true) {
+                input.value = '';
+                ul.appendChild(li);
+                }
+           } else {
+            input.value = "Please enter a valid name";
+        }
+    });
+
+
+
+
+
+// form.addEventListener('submit', (e) => {
+//   e.preventDefault();
+//   const inputText = input.value;
+//   const li = createLI(inputText);
+//   if(inputText === '' || inputText === "Please enter a valid name"){
+//     input.value = "Please enter a valid name";
+//   } else {
+//   input.value = '';
+//   ul.appendChild(li);
+//   }
+// })
 
 ul.addEventListener('change', (e) => {
   const checkbox = event.target;
