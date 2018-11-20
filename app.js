@@ -6,8 +6,54 @@ document.addEventListener('DOMContentLoaded', () => {
   const div = document.createElement('div');
   const filterLabel = document.createElement('label');
   const filterCheckBox = document.createElement('input');
-  const invitees = [];
+
+  const namesArray = [];
+
+  let spanOldText = '';
+
+  // Model Functions
+
+  // returns array from storage
+  function loadData() {
+    const itemsString = localStorage.getItem('storage');
+    if(itemsString) {
+      return JSON.parse(itemsString);
+    } else {
+      return [];
+    }
+  }
+
+  // add item text (string) to array and calls saveData (to storage)
+  function addItem(item) {
+    namesArray.push(item);
+    saveData(namesArray);
+  }
+
+  // add edited item text (string) to same index at array and calls saveData (to storage)
+    function addEditItem(item) {
+      const findItemIndex = arrSearch(namesArray, spanOldText);
+      namesArray.splice(findItemIndex, 1, item);
+      saveData(namesArray);
+    }
+
+  // remove item from array and calls saveData (to storage)
+  function removeItem (spanOldText) {
+    const indexSpanOldText = namesArray.indexOf(spanOldText);
+    if (indexSpanOldText > -1) {
+      namesArray.splice(indexSpanOldText, 1);
+    }
+    saveData(namesArray);
+  }
   
+  // saves array to storage
+  function saveData(array) {
+    localStorage.setItem('storage', JSON.stringify(array));
+  }
+
+  // search array for item
+  function arrSearch(array, item) {
+    return array.indexOf(item);
+  }
   
   filterLabel.textContent = "Hide non-responders";
   filterCheckBox.type = 'checkbox';
@@ -62,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     appendTo('button', 'textContent', 'Remove');
     return li;
   }
-  
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const inputText = input.value;
@@ -80,16 +126,29 @@ document.addEventListener('DOMContentLoaded', () => {
             if (duplicateName != true) {
             input.value = '';
             ul.appendChild(li);
-            localStorage.setItem('invitees', JSON.stringify(ul.innerHTML));
+            // invitees.push(ul.innerHTML);
+            // localStorage.setItem('invitees', JSON.stringify(invitees));
+            addItem(inputText)
             }
        } else {
         input.value = "Please enter a valid name";
     }
 });
 
-if(localStorage.invitees)
-  ul.innerHTML = JSON.parse(localStorage.invitees);
-  
+window.onload = function() {
+  //  function getItems() {
+      const startItems = loadData();     
+      for(let i = 0; i < startItems.length; i++) {
+        addItem(startItems[i]);
+        // namesArray.push(startItems[i]);
+        const li = createLI(startItems[i]);
+        ul.appendChild(li);
+      }
+  //  }
+  //  getItems();
+  }
+
+
   ul.addEventListener('change', (e) => {
     const checkbox = event.target;
     const checked = checkbox.checked;
@@ -101,6 +160,7 @@ if(localStorage.invitees)
       listItem.className = '';
     }
   })
+
   
   ul.addEventListener('click', (e) => {
     if (e.target.tagName === 'BUTTON') {
@@ -113,8 +173,7 @@ if(localStorage.invitees)
       const nameActions = {
         Remove:  () => {
           ul.removeChild(li);
-          removeInvitee(li);
-          localStorage.removeItem('invitees', JSON.stringify(li.innerHTML));
+          removeItem(span.textContent);
         },
         Edit: () => {
           button.textContent = "Save";
