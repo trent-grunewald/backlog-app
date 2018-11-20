@@ -64,32 +64,31 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   form.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const inputText = input.value;
-          const li = createLI(inputText);
-          let duplicateName = false;
-  
-          if (input.value != '' && input.value != 'Please enter a valid name') { 
-              for (i = 0; i < ul.children.length; i ++) {
-                  if (inputText == ul.children[i].children[0].textContent) {
-                    duplicateName === true;
-                  input.value = "This person has already been invited";
-                  return
-                  }
-              }
-                  if (duplicateName != true) {
-                  input.value = '';
-                  ul.appendChild(li);
-                  invitees.push(li.outerHTML);
-                  localStorage.setItem(['invitees'], JSON.stringify(invitees));
-                  }
-             } else {
-              input.value = "Please enter a valid name";
-          }
-      });
-  
-      if(localStorage.invitees)
-        ul.innerHTML = JSON.parse(localStorage.getItem('invitees'));
+    e.preventDefault();
+    const inputText = input.value;
+    const li = createLI(inputText);
+    let duplicateName = false;
+
+    if (input.value != '' && input.value != 'Please enter a valid name') { 
+        for (i = 0; i < ul.children.length; i ++) {
+            if (inputText == ul.children[i].children[0].textContent) {
+              duplicateName === true;
+            input.value = "This person has already been invited";
+            return
+            }
+        }
+            if (duplicateName != true) {
+            input.value = '';
+            ul.appendChild(li);
+            localStorage.setItem('invitees', JSON.stringify(ul.innerHTML));
+            }
+       } else {
+        input.value = "Please enter a valid name";
+    }
+});
+
+if(localStorage.invitees)
+  ul.innerHTML = JSON.parse(localStorage.invitees);
   
   ul.addEventListener('change', (e) => {
     const checkbox = event.target;
