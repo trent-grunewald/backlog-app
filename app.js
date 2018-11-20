@@ -82,20 +82,20 @@ document.addEventListener('DOMContentLoaded', () => {
                   input.value = "This person has already been invited";
                   return
                   }
+              }
                   if (duplicateName != true) {
                   input.value = '';
                   ul.appendChild(li);
-                  invitees.push(li.innerHTML);
+                  invitees.push(li.outerHTML);
                   console.log(invitees);
                   }
-              }
              } else {
               input.value = "Please enter a valid name";
           }
       });
   
       if(localStorage.invitees){
-        ul.innerHTML = JSON.parse(localStorage.getItem("invitees"))
+        ul.innerHTML = JSON.parse(localStorage['invitees'])
     }
   
   ul.addEventListener('change', (e) => {
