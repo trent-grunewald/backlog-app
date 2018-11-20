@@ -8,11 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const filterCheckBox = document.createElement('input');
   const invitees = [];
   
-
-  
-  function removeInvitee(me){
-    localStorage.removeItem(me);
-  }
   
   filterLabel.textContent = "Hide non-responders";
   filterCheckBox.type = 'checkbox';
@@ -65,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
     appendTo('button', 'textContent', 'Edit' );
   
     appendTo('button', 'textContent', 'Remove');
-                  localStorage.setItem(['invitees'], JSON.stringify(li.outerHTML));                  
     return li;
   }
   
@@ -77,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
           if (input.value != '' && input.value != 'Please enter a valid name') { 
               for (i = 0; i < ul.children.length; i ++) {
-                  if (input.value == ul.children[i].children[0].textContent) {
+                  if (inputText == ul.children[i].children[0].textContent) {
                     duplicateName === true;
                   input.value = "This person has already been invited";
                   return
@@ -87,16 +81,15 @@ document.addEventListener('DOMContentLoaded', () => {
                   input.value = '';
                   ul.appendChild(li);
                   invitees.push(li.outerHTML);
-                  console.log(invitees);
+                  localStorage.setItem(['invitees'], JSON.stringify(invitees));
                   }
              } else {
               input.value = "Please enter a valid name";
           }
       });
   
-      if(localStorage.invitees){
-        ul.innerHTML = JSON.parse(localStorage['invitees'])
-    }
+      if(localStorage.invitees)
+        ul.innerHTML = JSON.parse(localStorage.getItem('invitees'));
   
   ul.addEventListener('change', (e) => {
     const checkbox = event.target;
