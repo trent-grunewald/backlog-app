@@ -165,7 +165,7 @@ window.onload = function() {
   ul.addEventListener('click', (e) => {
     if (e.target.tagName === 'BUTTON') {
       const button = e.target;
-      const li = e.target.parentNode;
+      const li = button.parentNode;
       const ul = li.parentNode;
       const span = li.firstElementChild;
       const input = document.createElement('input');
@@ -188,6 +188,7 @@ window.onload = function() {
           li.insertBefore(edit, span);
           li.removeChild(span);
           edit.textContent = span.value;
+          addEditItem(edit.textContent)
         }
       };
   
