@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const div = document.createElement('div');
   const filterLabel = document.createElement('label');
   const filterCheckBox = document.createElement('input');
+  const media = document.querySelectorAll('.mediaType');
   const namesArray = [];
   let spanOldText = '';
 
@@ -19,6 +20,15 @@ document.addEventListener('DOMContentLoaded', () => {
       return [];
     }
   }
+
+  const  mediaArray= function() {
+    for(var i=0; i<media.length; i++) {
+        if( media[i].checked ) {
+            return false;
+        }
+    }
+    return true;
+};
 
   // add item text (string) to array and calls saveData (to storage)
   function addItem(item) {
@@ -97,12 +107,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const li = document.createElement('li');
     appendTo('span', 'textContent', text);
   
-    let test = document.querySelectorAll('.mediaType');
-    for(let i = 0; i < test.length; i++){
-      let test2 = test[i];
-      if(test2.checked === true){
-        appendTo('label', 'textContent', test2.value)
-    }
+    for(let i = 0; i < media.length; i++){
+      let mediaType = media[i];
+      if(mediaType.checked === true){
+        appendTo('label', 'textContent', mediaType.value)
+      }
     }
   
     appendTo('button', 'textContent', 'Edit' );
@@ -112,13 +121,16 @@ document.addEventListener('DOMContentLoaded', () => {
     return li;
   }
 
+
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const inputText = input.value;
     const li = createLI(inputText);
     let duplicateName = false;
 
-    if (input.value != '' && input.value != 'Please enter a valid name') { 
+    if (inputText != '' && input.value != 'Please enter a valid name') { 
+      
         for (i = 0; i < ul.children.length; i ++) {
             if (inputText == ul.children[i].children[0].textContent) {
               duplicateName === true;
@@ -126,13 +138,19 @@ document.addEventListener('DOMContentLoaded', () => {
             return
             }
         }
+        for(let i = 0; i < media.length; i++){
+          if(mediaArray()){
+            input.value = "Please select a media type"
+            return
+          }
+        }
             if (duplicateName != true) {
               input.value = '';
               ul.appendChild(li);
               addItem(inputText)
             }
        } else {
-        input.value = "Please enter a valid name";
+        input.value = "Please enter a valid title";
     }
 });
 
