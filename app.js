@@ -6,12 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const div = document.createElement('div');
   const filterLabel = document.createElement('label');
   const filterCheckBox = document.createElement('input');
-
   const namesArray = [];
-
   let spanOldText = '';
 
-  // Model Functions
 
   // returns array from storage
   function loadData() {
@@ -100,12 +97,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const li = document.createElement('li');
     appendTo('span', 'textContent', text);
   
-    appendTo('label', 'textContent', 'Confirmed')
-      .appendChild(createElement('input', 'type', 'checkbox'));
+    let mediaType = document.querySelectorAll('.mediaType');
+    for(let i = 0; i < mediaType.length; i++){
+      let media = mediaType[i];
+      if(media.checked === true){
+        appendTo('label', 'textContent', test2.value)
+      }
+    }
   
     appendTo('button', 'textContent', 'Edit' );
   
     appendTo('button', 'textContent', 'Remove');
+    
     return li;
   }
 
@@ -124,11 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
             if (duplicateName != true) {
-            input.value = '';
-            ul.appendChild(li);
-            // invitees.push(ul.innerHTML);
-            // localStorage.setItem('invitees', JSON.stringify(invitees));
-            addItem(inputText)
+              input.value = '';
+              ul.appendChild(li);
+              addItem(inputText)
             }
        } else {
         input.value = "Please enter a valid name";
@@ -198,4 +199,6 @@ window.onload = function() {
   
       }
     });
+
+    
   });
