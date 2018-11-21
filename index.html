@@ -10,14 +10,15 @@
 <body>
   <div class="wrapper">
     <header>
-      <h1>RSVP</h1>
+      <h1>The Backlog</h1>
       <form id="registrar">
          
         <input type="text" name="name" placeholder="Add title">
-        <div>
-            <input type="radio" name="mediaType" class="mediaType" value="Movie">Movie
-            <input type="radio" name="mediaType" class="mediaType" value="Game">Game
-          </div>
+        <div class="media">
+          <div class="selectedMedia"><input type="radio" name="mediaType" class="mediaType" value="Movie">Movie</div>
+          <div class="selectedMedia"><input type="radio" name="mediaType" class="mediaType" value="Game">Game</div>
+          <div class="selectedMedia"><input type="radio" name="mediaType" class="mediaType" value="Book">Book</div>
+        </div>
         <button type="submit" name="submit" value="submit">Submit</button>
         
       </form>

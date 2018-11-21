@@ -97,12 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const li = document.createElement('li');
     appendTo('span', 'textContent', text);
   
-    let mediaType = document.querySelectorAll('.mediaType');
-    for(let i = 0; i < mediaType.length; i++){
-      let media = mediaType[i];
-      if(media.checked === true){
+    let test = document.querySelectorAll('.mediaType');
+    for(let i = 0; i < test.length; i++){
+      let test2 = test[i];
+      if(test2.checked === true){
         appendTo('label', 'textContent', test2.value)
-      }
+    }
     }
   
     appendTo('button', 'textContent', 'Edit' );

@@ -32,15 +32,22 @@ form {
   overflow: hidden;
   display: -webkit-flex;
   display: flex;
+  flex-flow: column;
   border-radius: .2em;
   border: solid 4px white;
   box-shadow: 0 1px 14px rgba(0,0,0, .12);
 }
+.media{
+  display: flex;
+  position: relative;
+  flex-grow: 1;
+}
 form button {
-  padding: 0 1em;
+  padding: .5em 1em;
   font-size: 1em;
   background: #7bcbc4;
-  border-radius: .2em;
+  border-radius: 5px;
+  margin: 7px 0;
 }
 ul {
   list-style: none;
@@ -70,16 +77,18 @@ header {
               background-blend-mode: multiply;    
               background-size: cover;   
 }
-header input {
+header input, .selectedMedia {
   padding: 12px;
   font-size: 1.15em;
-  width: 100%;
+  text-align: center;
+  flex-grow: 1;
 }
 li span, 
 li input[type=text] {
   color: #707070;
   font-size: 1.3em;
   margin-bottom: .3em;
+  text-align: center;
 }
 li input[type=text] {
   padding: .2em;
