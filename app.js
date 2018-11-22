@@ -122,6 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
+  //Append media type on submit
+
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
