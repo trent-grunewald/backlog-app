@@ -7,19 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const filterLabel = document.createElement('label');
   const filterCheckBox = document.createElement('input');
   const media = document.querySelectorAll('.mediaType');
-  const namesArray = [];
-  let spanOldText = '';
+  const titlesArray = localStorage.getItem('localTitles') ? JSON.parse(localStorage.getItem('localTitles')) : [] ;
 
-
-  // returns array from storage
-  function loadData() {
-    const itemsString = localStorage.getItem('storage');
-    if(itemsString) {
-      return JSON.parse(itemsString);
-    } else {
-      return [];
-    }
-  }
+  localStorage.setItem('localTitles', JSON.stringify(titlesArray));
+  const titles = JSON.parse(localStorage.getItem('titlesArray'));
 
   const  mediaArray= function() {
     for(var i=0; i<media.length; i++) {
@@ -29,38 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     return true;
 };
-
-  // add item text (string) to array and calls saveData (to storage)
-  function addItem(item) {
-    namesArray.push(item);
-    saveData(namesArray);
-  }
-
-  // add edited item text (string) to same index at array and calls saveData (to storage)
-    function addEditItem(item) {
-      const findItemIndex = arrSearch(namesArray, spanOldText);
-      namesArray.splice(findItemIndex, 1, item);
-      saveData(namesArray);
-    }
-
-  // remove item from array and calls saveData (to storage)
-  function removeItem (spanOldText) {
-    const indexSpanOldText = namesArray.indexOf(spanOldText);
-    if (indexSpanOldText > -1) {
-      namesArray.splice(indexSpanOldText, 1);
-    }
-    saveData(namesArray);
-  }
-  
-  // saves array to storage
-  function saveData(array) {
-    localStorage.setItem('storage', JSON.stringify(array));
-  }
-
-  // search array for item
-  function arrSearch(array, item) {
-    return array.indexOf(item);
-  }
   
   filterLabel.textContent = "Hide non-responders";
   filterCheckBox.type = 'checkbox';
@@ -121,10 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return li;
   }
 
-
-  //Append media type on submit
-
-
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const inputText = input.value;
@@ -149,6 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (duplicateName != true) {
               input.value = '';
               ul.appendChild(li);
+              titlesArray.push(li.outerHTML);
+              localStorage.setItem('localTitles', JSON.stringify(titlesArray))
               addItem(inputText)
             }
        } else {
@@ -158,16 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.onload = function() {
   //  function getItems() {
-      const startItems = loadData();     
-      for(let i = 0; i < startItems.length; i++) {
-        addItem(startItems[i]);
-        // namesArray.push(startItems[i]);
-        const li = createLI(startItems[i]);
-        ul.appendChild(li);
-      }
-  //  }
-  //  getItems();
-  }
+      titlesArray.forEach(item => {
+          createLI(item);
+      })
+    }
 
 
   ul.addEventListener('change', (e) => {
