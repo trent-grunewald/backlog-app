@@ -7,11 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const filterLabel = document.createElement('label');
   const filterCheckBox = document.createElement('input');
   const media = document.querySelectorAll('.mediaType');
-  const titlesArray = localStorage.getItem('localTitles') ? JSON.parse(localStorage.getItem('localTitles')) : [] ;
-
-  localStorage.setItem('localTitles', JSON.stringify(titlesArray));
-  const titles = JSON.parse(localStorage.getItem('titlesArray'));
-
+ 
   const  mediaArray= function() {
     for(var i=0; i<media.length; i++) {
         if( media[i].checked ) {
@@ -101,24 +97,18 @@ document.addEventListener('DOMContentLoaded', () => {
             return
           }
         }
-            if (duplicateName != true) {
-              input.value = '';
-              ul.appendChild(li);
-              titlesArray.push(li.outerHTML);
-              localStorage.setItem('localTitles', JSON.stringify(titlesArray))
-              addItem(inputText)
+        if (duplicateName != true) {
+            input.value = '';
+            ul.appendChild(li);
+            localStorage.setItem('invitees', JSON.stringify(ul.innerHTML));
             }
        } else {
-        input.value = "Please enter a valid title";
+        input.value = "Please enter a valid name";
     }
 });
 
-window.onload = function() {
-  //  function getItems() {
-      titlesArray.forEach(item => {
-          createLI(item);
-      })
-    }
+if(localStorage.invitees)
+  ul.innerHTML = JSON.parse(localStorage.invitees);
 
 
   ul.addEventListener('change', (e) => {
