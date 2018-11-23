@@ -106,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
               input.value = '';
               ul.appendChild(li);
               itemsArray.push(input.value);
-  localStorage.setItem('items', JSON.stringify(itemsArray));
               localStorage.setItem('invitees', JSON.stringify(ul.innerHTML));
               }
          } else {
