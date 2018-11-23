@@ -4,14 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = form.querySelector('input');
     const ul = document.getElementById('invitedList');
     const div = document.createElement('div');
-    const filterLabel = document.createElement('label');
-    const filterCheckBox = document.createElement('input');
+    const movieLabel = document.createElement('div');
+    const movieFilter = document.createElement('input')
+    const gameLabel = document.createElement('div');
+    const gameFilter = document.createElement('input')
+    const bookLabel = document.createElement('div');
+    const bookFilter = document.createElement('input');
     const media = document.querySelectorAll('.mediaType');
-    let itemsArray = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
-
-    localStorage.setItem('items', JSON.stringify(itemsArray));
-    const data = JSON.parse(localStorage.getItem('items'));
-
 
     const  mediaArray= function() {
       for(var i=0; i<media.length; i++) {
@@ -22,21 +21,75 @@ document.addEventListener('DOMContentLoaded', () => {
       return true;
   };
     
-    filterLabel.textContent = "Hide non-responders";
-    filterCheckBox.type = 'checkbox';
-    div.appendChild(filterLabel);
-    div.appendChild(filterCheckBox);
+    movieLabel.textContent = "Movies Only";
+    movieLabel.appendChild(movieFilter);
+    movieFilter.classList = "movieFilter";
+    movieFilter.type = "checkBox";
+    movieFilter.name = "type";
+    gameLabel.textContent = "Games Only";
+    gameLabel.appendChild(gameFilter);
+    gameFilter.classList = "gameFilter";
+    gameFilter.type = "checkBox";
+    gameFilter.name = "type";
+    bookLabel.textContent = "Books Only";
+    bookLabel.appendChild(bookFilter);
+    bookFilter.classList = "bookFilter";
+    bookFilter.type = "checkBox";
+    bookFilter.name = "type";
+    div.appendChild(movieLabel);
+    div.appendChild(gameLabel);
+    div.appendChild(bookLabel);
     mainDiv.insertBefore(div, ul);
     
     
     
-    filterCheckBox.addEventListener('change', (e) => {
+    movieFilter.addEventListener('change', (e) => {
       const isChecked = e.target.checked;
       const lis = ul.children;
       if(isChecked){
         for(let i = 0; i<lis.length; i++){
           let li = lis[i];
-          if(li.className === 'responded'){
+          if(li.classList == 'Movie'){
+            li.style.display = '';
+          } else {
+            li.style.display = 'none';
+          }
+        }
+      } else {
+        for(let i = 0; i<lis.length; i++){
+          let li = lis[i];
+           li.style.display = '';
+        }
+      }
+    })
+
+    gameFilter.addEventListener('change', (e) => {
+      const isChecked = e.target.checked;
+      const lis = ul.children;
+      if(isChecked){
+        for(let i = 0; i<lis.length; i++){
+          let li = lis[i];
+          if(li.classList == 'Game'){
+            li.style.display = '';
+          } else {
+            li.style.display = 'none';
+          }
+        }
+      } else {
+        for(let i = 0; i<lis.length; i++){
+          let li = lis[i];
+           li.style.display = '';
+        }
+      }
+    })
+
+    bookFilter.addEventListener('change', (e) => {
+      const isChecked = e.target.checked;
+      const lis = ul.children;
+      if(isChecked){
+        for(let i = 0; i<lis.length; i++){
+          let li = lis[i];
+          if(li.classList == 'Book'){
             li.style.display = '';
           } else {
             li.style.display = 'none';
@@ -71,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let mediaType = media[i];
         if(mediaType.checked === true){
           appendTo('label', 'textContent', mediaType.value)
+          li.classList = mediaType.value;
         }
       }
     
@@ -105,17 +159,13 @@ document.addEventListener('DOMContentLoaded', () => {
           if (duplicateName != true) {
               input.value = '';
               ul.appendChild(li);
-              itemsArray.push(input.value);
-              localStorage.setItem('invitees', JSON.stringify(ul.innerHTML));
               }
          } else {
           input.value = "Please enter a valid name";
       }
   });
   
-  if(localStorage.invitees)
-    ul.innerHTML = JSON.parse(localStorage.invitees);
-  
+
   
     ul.addEventListener('change', (e) => {
       const checkbox = event.target;
@@ -140,8 +190,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const edit = document.createElement('span');
         const nameActions = {
           Remove:  () => {
+            localStorage.removeItem(span);
             ul.removeChild(li);
-            removeItem(span.textContent);
           },
           Edit: () => {
             button.textContent = "Save";
