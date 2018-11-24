@@ -16,6 +16,7 @@ form button {
 h1 {
   font-family: 'Courgette', cursive;
   text-shadow: 0 1px 0 rgba(0,0,0, .4);
+  color: #25201a;
   line-height: .65;
   margin-top: .5em;
   margin-bottom: 0;
@@ -74,7 +75,6 @@ button {
 }
 header {
   text-align: center;
-  background: linear-gradient(white, #0000004d, #fcfcfc);
 }
 header input, .selectedMedia {
   padding: 12px;
