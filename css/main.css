@@ -3,8 +3,10 @@
 }
 body {
   font-family: 'Lato', sans-serif;
-  color: #4c4c4c;
-  background: #f8fdf3;
+  color: #489fba;
+  background: url(https://cdn2.theweek.co.uk/sites/theweek/files/styles/super_wide/public/2017/07/170706-lg-tv-w7.png?itok=TZSaiqlf)center center no-repeat;
+  background-size: cover;
+  height: 100vh;
 }
 h1,
 p,
@@ -45,7 +47,7 @@ form {
 form button {
   padding: .5em 1em;
   font-size: 1em;
-  background: #7bcbc4;
+  background: #1c77ae;
   border-radius: 5px;
   margin: 7px 0;
 }
@@ -72,10 +74,7 @@ button {
 }
 header {
   text-align: center;
-  background: linear-gradient(90deg, #d4eece, #55b3d0, #1e7eb7),
-              url('images/header-bg.jpg') no-repeat;
-              background-blend-mode: multiply;    
-              background-size: cover;   
+  background: linear-gradient(white, #0000004d, #fcfcfc);
 }
 header input, .selectedMedia {
   padding: 12px;
@@ -111,7 +110,7 @@ li button {
   border-radius: .3em;
   padding: .4em .6em;
   color: white;
-  background: #58b7cd;
+  background: #1c77ae;;
 }
 li button:last-child {
   background: rgba(88, 183, 205, .5);
